@@ -8,7 +8,7 @@ Ping::Ping(const int echoPin, const int triggerPin) {
   _triggerPin = triggerPin;
 }
 
-float Ping::pulse() {
+int Ping::pulse() {
   digitalWrite(_triggerPin, LOW);
   delayMicroseconds(2);
   digitalWrite(_triggerPin, HIGH); 
@@ -17,7 +17,7 @@ float Ping::pulse() {
   // Mål hvor lang tid det tar før ekkoet kommer tilbake 
   long duration = pulseIn(_echoPin, HIGH);
   // Regn ut avstanden 
-  float distance = duration * 0.0017;
+  int distance = duration / 58;
   return distance;
 }
 
