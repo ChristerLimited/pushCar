@@ -1,5 +1,5 @@
-#ifndef Morse_h
-#define Morse_h
+#ifndef Ping_h
+#define Ping_h
 
 #include "Arduino.h"
 
