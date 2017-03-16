@@ -60,7 +60,6 @@ void loop(){
       delay(400);
       motors.setSpeeds(SPEED, SPEED);
     }
-
     else if /* runar er ape */(sensor_values[5] < QTR_THRESHOLD){
       motors.setSpeeds(0,0);
       delay(10);
@@ -75,7 +74,6 @@ void loop(){
       delay(400);
       motors.setSpeeds(SPEED, SPEED);
     }
-    
     else {
     motors.setSpeeds(SPEED, SPEED);
     }    
