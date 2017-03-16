@@ -68,7 +68,7 @@ void loop(){
       delay(400);
       motors.setSpeeds(SPEED, SPEED);
     }
-    else if {
+    else if (sonar.ping_cm() > 0) {
       
     }
     else {
