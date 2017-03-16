@@ -1,13 +1,16 @@
-#include "Ping.h"
+#include <NewPing.h>
+const int triggerPin=7;
+const int echoPin = 8;
+const int maxDistance = 30;
 
-Ping ping(8, 7);
+NewPing sonar(triggerPin, echoPin, maxDistance);
 
 void setup() {
   Serial.begin(9600);
 }
 
 void loop() {
-  float distance = ping.pulse();
+  int distance = sonar.ping_cm();
   Serial.println(distance);
   delay(100);
 }
