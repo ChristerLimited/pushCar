@@ -24,8 +24,8 @@ boolean direction = LOW;       // Drives motors forward, HIGH drives reverse
 unsigned int sensor_values[NUM_SENSORS];
 
 // NewPing Stuff
-const int triggerPin = 4;
-const int echoPin = 5;
+const int triggerPin = 2;
+const int echoPin = 3;
 const int maxDistance = 30;
 NewPing sonar(triggerPin, echoPin, maxDistance);
  
@@ -69,8 +69,13 @@ void loop(){
       motors.setSpeeds(SPEED, SPEED);
     }
     else if (sonar.ping_cm() > 0) {
-      
+      motors.setSpeeds(0,0);
+      delay(1000);
+      motors.setSpeeds(-300,300);
+      delay(400);
+      motors.setSpeeds(SPEED, SPEED);
     }
+    
     else {
     motors.setSpeeds(SPEED, SPEED);
     }    
