@@ -7,6 +7,7 @@ Drive forward or reverse when border is detected
 #include <Pushbutton.h>
 #include <QTRSensors.h>
 #include <ZumoReflectanceSensorArray.h>
+#include <NewPing.h>
 
  
 // this might need to be tuned for different 
@@ -21,6 +22,12 @@ Pushbutton button(ZUMO_BUTTON); // pushbutton on pin 12
 boolean direction = LOW;       // Drives motors forward, HIGH drives reverse
 #define NUM_SENSORS 6
 unsigned int sensor_values[NUM_SENSORS];
+
+// NewPing Stuff
+const int triggerPin = 4;
+const int echoPin = 5;
+const int maxDistance = 30;
+NewPing sonar(triggerPin, echoPin, maxDistance);
  
 ZumoReflectanceSensorArray reflectanceSensors; //(QTR_NO_EMITTER_PIN);
 
@@ -39,13 +46,13 @@ void loop(){
             delay(700);
             motors.setSpeeds(SPEED,-200);
             delay(50);
-      }
-     else if /* paul er gay */ ((sensor_values[4] < QTR_THRESHOLD) && (sensor_values[5] < QTR_THRESHOLD)){
+    }
+    else if /* paul er gay */ ((sensor_values[4] < QTR_THRESHOLD) && (sensor_values[5] < QTR_THRESHOLD)){
             motors.setSpeeds(0,-300);
             delay(700);
             motors.setSpeeds(SPEED,-200);
             delay(50);
-      }
+    }
     else if /* christer er sau */ (sensor_values[0] < QTR_THRESHOLD){
       motors.setSpeeds(0,0);
       delay(10);
@@ -61,10 +68,12 @@ void loop(){
       delay(400);
       motors.setSpeeds(SPEED, SPEED);
     }
-    else{
+    else if {
+      
+    }
+    else {
     motors.setSpeeds(SPEED, SPEED);
-  
-  }    
+    }    
 }
   /*reflectanceSensors.read(sensor_values); // gives raw values 0-2000 (pulse times in um)
   
