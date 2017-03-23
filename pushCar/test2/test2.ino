@@ -1,4 +1,20 @@
-#include <Pushbutton.h>
+#include <NewPing.h>
+const int maxDistance = 30;
+const int triggerPin = 6;
+const int echoPin = 7;
+NewPing sonar(triggerPin, echoPin, maxDistance);
+
+void setup()
+{
+ Serial.begin(9600);
+}
+void loop()
+{
+ Serial.println(sonar.ping_cm());
+ delay(200);
+}
+
+/*#include <Pushbutton.h>
 #include <QTRSensors.h>
 #include <ZumoReflectanceSensorArray.h>
 Pushbutton button(ZUMO_BUTTON); // pushbutton on pin 12
@@ -27,4 +43,4 @@ void loop()
  Serial.print(sensor_values[5]);
  Serial.println(' ');
  delay(1000);
-}
+}*/
