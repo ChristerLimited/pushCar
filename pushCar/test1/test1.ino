@@ -31,28 +31,28 @@ unsigned int sensor_values[NUM_SENSORS];
 const int maxDistance = 25;
 const int triggerPin = 2;
 const int echoPin = 3;
-const int triggerPinR = 6;
-const int echoPinR = A1;
+const int triggerPinR = A1;
+const int echoPinR = 6;
 const int triggerPinL = A4;
 const int echoPinL = A5;
 NewPing sonar(triggerPin, echoPin, maxDistance);
 NewPing sonarL(triggerPinL, echoPinL, maxDistance);
 NewPing sonarR(triggerPinR, echoPinR, maxDistance);
 
-const int btUnitTxPin = 2; // Connected to tx on bt unit
-const int btUnitRxPin = 3; // Connected to rx on bt unit
+//const int btUnitTxPin = 2; // Connected to tx on bt unit
+//const int btUnitRxPin = 3; // Connected to rx on bt unit
 
  
 ZumoReflectanceSensorArray reflectanceSensors; //(QTR_NO_EMITTER_PIN);
 
-PLabBTSerial btSerial(btUnitTxPin, btUnitRxPin);
+//PLabBTSerial btSerial(btUnitTxPin, btUnitRxPin);
  
 void setup()
 {
    reflectanceSensors.init();
    button.waitForButton();
    Serial.begin(9600);
-   btSerial.begin(9600);
+//   btSerial.begin(9600);
    motors.setSpeeds(SPEED, SPEED);
 
 }
@@ -87,49 +87,49 @@ void loop(){
     }
 
     //Når den ser noe til venstre spinner den mot venstre til den ser det foran
-    /*else if (sonarL.ping_cm() > 0) {
-      while (!(sonar.ping_cm() > 0)) {
+    else if (sonarL.ping_cm() > 0) {
+      int index =0;
+      while ((!(sonar.ping_cm() > 0)) && index < 12) {
         motors.setSpeeds(-100,100);
-        delay(1000);
+        delay(80);
+        index++;
       }
       motors.setSpeeds(SPEED, SPEED);
-    }*/
-     else if (sonar.ping_cm() > 0){
-        motors.setSpeeds(-100,100);
-        delay(1000);
     }
         
     // Samma når den ser noe til høyre
-   /* else if (sonarR.ping_cm() > 0) {
-      while (!(sonar.ping_cm() > 0)) {
+   else if (sonarR.ping_cm() > 0) {
+      int index =0;
+      while ((!(sonar.ping_cm() > 0)) && index < 12) {
         motors.setSpeeds(100,-100);
-        delay(100);
+        delay(80);
+        index++;
       }
       motors.setSpeeds(SPEED, SPEED);
-    }*/
+    }
 
     else {
     motors.setSpeeds(SPEED, SPEED);
     }
 
     // See if we have received a new character
-    int availableCount = btSerial.available();
+    /*int availableCount = btSerial.available();
     if (availableCount > 0) {
       char text[availableCount];
       btSerial.read(text, availableCount); 
       readCommand(text);
-    }
+    }*/
 }
 
-void readCommand (char *text) {
+/*void readCommand (char *text) {
   /*if (0 == strcmp("FORWARD", text)) {
     motors.setSpeeds(200, 200);
-  }*/ 
+  }
   Serial.println(text);
   if (0 == strcmp("STOP", text)) {
     motors.setSpeeds(0, 0);
     delay(5000);
-  }/* else if (0 == strcmp("BACKWARD", text)) {
+  }else if (0 == strcmp("BACKWARD", text)) {
     motors.setSpeeds(-200, -200);
   } else if (0 == strcmp("LEFT", text)) {
     motors.turnLeft(200, 90);
@@ -143,5 +143,5 @@ void readCommand (char *text) {
     motors.forward(200, 5);
   } else if (0 == strcmp("STEPB", text)) {
    motors.backward(200, 5);  
-  } */
-}
+  } 
+}*/
