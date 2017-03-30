@@ -40,7 +40,7 @@ NewPing sonarL(triggerPinL, echoPinL, maxDistance);
 NewPing sonarR(triggerPinR, echoPinR, maxDistance);
 
 const int btUnitTxPin = 2; // Connected to tx on bt unit
-const int btUnitRxPin = 6; // Connected to rx on bt unit
+const int btUnitRxPin = 3; // Connected to rx on bt unit
 
  
 ZumoReflectanceSensorArray reflectanceSensors; //(QTR_NO_EMITTER_PIN);
@@ -53,9 +53,9 @@ void setup()
    button.waitForButton();
    Serial.begin(9600);
    btSerial.begin(9600);
+   motors.setSpeeds(SPEED, SPEED);
 
 }
-
 void loop(){
     reflectanceSensors.read(sensor_values);
     Serial.println(sonarL.ping_cm());
@@ -87,14 +87,18 @@ void loop(){
     }
 
     //Når den ser noe til venstre spinner den mot venstre til den ser det foran
-    else if (sonarL.ping_cm() > 0) {
+    /*else if (sonarL.ping_cm() > 0) {
       while (!(sonar.ping_cm() > 0)) {
         motors.setSpeeds(-100,100);
-        delay(100);
+        delay(1000);
       }
       motors.setSpeeds(SPEED, SPEED);
+    }*/
+     else if (sonar.ping_cm() > 0){
+        motors.setSpeeds(-100,100);
+        delay(1000);
     }
-    
+        
     // Samma når den ser noe til høyre
    /* else if (sonarR.ping_cm() > 0) {
       while (!(sonar.ping_cm() > 0)) {
@@ -103,6 +107,7 @@ void loop(){
       }
       motors.setSpeeds(SPEED, SPEED);
     }*/
+
     else {
     motors.setSpeeds(SPEED, SPEED);
     }
@@ -117,23 +122,26 @@ void loop(){
 }
 
 void readCommand (char *text) {
-  if (0 == strcmp("FORWARD", text)) {
-    PLab_motors.setSpeeds(200, 200);
-  } else if (0 == strcmp("STOP", text)) {
-    PLab_motors.setSpeeds(0, 0);
-  } else if (0 == strcmp("BACKWARD", text)) {
-    PLab_motors.setSpeeds(-200, -200);
+  /*if (0 == strcmp("FORWARD", text)) {
+    motors.setSpeeds(200, 200);
+  }*/ 
+  Serial.println(text);
+  if (0 == strcmp("STOP", text)) {
+    motors.setSpeeds(0, 0);
+    delay(5000);
+  }/* else if (0 == strcmp("BACKWARD", text)) {
+    motors.setSpeeds(-200, -200);
   } else if (0 == strcmp("LEFT", text)) {
-    PLab_motors.turnLeft(200, 90);
+    motors.turnLeft(200, 90);
   } else if (0 == strcmp("L45", text)) {
-   PLab_motors.turnLeft(200, 45);
+   motors.turnLeft(200, 45);
   } else if (0 == strcmp("RIGHT", text)) {
-    PLab_motors.turnRight(200, 90);
+    motors.turnRight(200, 90);
   } else if (0 == strcmp("R45", text)) {
-   PLab_motors.turnRight(200, 45);  
+   motors.turnRight(200, 45);  
   } else if (0 == strcmp("STEPF", text)) {
-    PLab_motors.forward(200, 5);
+    motors.forward(200, 5);
   } else if (0 == strcmp("STEPB", text)) {
-   PLab_motors.backward(200, 5);  
-  } 
+   motors.backward(200, 5);  
+  } */
 }

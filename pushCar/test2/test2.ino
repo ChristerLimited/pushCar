@@ -1,7 +1,7 @@
 #include <NewPing.h>
 const int maxDistance = 30;
-const int triggerPin = 6;
-const int echoPin = 7;
+const int triggerPin = 2;
+const int echoPin = 3;
 NewPing sonar(triggerPin, echoPin, maxDistance);
 
 void setup()
@@ -11,7 +11,7 @@ void setup()
 void loop()
 {
  Serial.println(sonar.ping_cm());
- delay(200);
+ delay(900);
 }
 
 /*#include <Pushbutton.h>
